@@ -167,9 +167,9 @@ module.exports = function(grunt) {
 						"* d3pie\n" +
 						"* @author Ben Keen\n" +
 						"* @version " + packageFile.version + "\n" +
-						"* @date April 2015\n" +
+						"* @date " + (new Date).toLocaleDateString("en-US", { month: 'short', year: 'numeric' }) + "\n" +
 						"* @repo http://github.com/benkeen/d3pie\n" +
-						"*/\n"
+						"*/"
 				}
 			},
 
@@ -192,7 +192,7 @@ module.exports = function(grunt) {
 				options: {
 					compress: true,
 					mangle: {
-						except: ["jQuery", "Backbone"]
+						reserved: ["jQuery", "Backbone"]
 					}
 				}
 			},
