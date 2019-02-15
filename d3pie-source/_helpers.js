@@ -90,9 +90,14 @@ var helpers = {
 		var el = document.getElementById(id);
 		var w = 0, h = 0;
 		if (el) {
-			var dimensions = el.getBBox();
-			w = dimensions.width;
-			h = dimensions.height;
+			try {
+				var dimensions = el.getBBox();
+				w = dimensions.width;
+				h = dimensions.height;
+			} catch(err) {
+				w = 0;
+				h = 0;
+			}
 		} else {
 			console.log("error: getDimensions() " + id + " not found.");
 		}

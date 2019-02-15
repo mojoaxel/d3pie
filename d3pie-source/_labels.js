@@ -107,11 +107,22 @@ var labels = {
 			var percentage = d3.select(this).selectAll("." + pie.cssPrefix + "segmentPercentage-" + section);
 			var value      = d3.select(this).selectAll("." + pie.cssPrefix + "segmentValue-" + section);
 
-			labels["dimensions-" + section].push({
-				mainLabel:  (mainLabel.node() !== null) ? mainLabel.node().getBBox() : null,
-				percentage: (percentage.node() !== null) ? percentage.node().getBBox() : null,
-				value:      (value.node() !== null) ? value.node().getBBox() : null
-			});
+			function getBBox(node) {
+				if (node) {
+					try {
+						return node.getBBox();
+					} catch(err) {}
+				}
+				return null;
+			}
+
+			var label = {
+				mainLabel:  getBBox(mainLabel.node()),
+				percentage: getBBox(percentage.node()),
+				value:      getBBox(value.node())
+			};
+
+			labels["dimensions-" + section].push(label);
 		});
 
 		var singleLinePad = 5;
@@ -471,7 +482,10 @@ var labels = {
     if (!labelGroupNode) {
       return;
     }
-    var labelGroupDims = labelGroupNode.getBBox();
+		var labelGroupDims = {};
+		try {
+			labelGroupDims = labelGroupNode.getBBox();
+		} catch(err) {}
 		var angle = segments.getSegmentAngle(i, pie.options.data.content, pie.totalSize, { midpoint: true });
 
 		var originalX = pie.pieCenter.x;

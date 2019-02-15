@@ -226,11 +226,17 @@ var segments = {
 	},
 
 	getCentroid: function(el) {
-		var bbox = el.getBBox();
-		return {
-			x: bbox.x + bbox.width / 2,
-			y: bbox.y + bbox.height / 2
-		};
+		try {
+			var bbox = el.getBBox();
+			return {
+				x: bbox.x + bbox.width / 2,
+				y: bbox.y + bbox.height / 2
+			};
+		} catch(err) {
+			return {
+				x: 0, y: 0, width: 0, height: 0
+			};
+		}
 	},
 
 	/**
